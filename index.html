@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ALTEA · Descubre lo que te favorece</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="#" data-go="inicio">ALTEA</a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#" data-go="inicio" data-nav="inicio" class="is-current">Inicio</a>
+      <a href="#" data-go="analisis" data-nav="analisis">Análisis</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- PANTALLA 1: INICIO -->
+    <section id="inicio" class="view is-active">
+      <div class="hero">
+  <div class="hero__text">
+    <h1>Descubre lo que te favorece</h1>
+    <p>Analizamos la forma de tu rostro y el color de tu piel para darte una guía de estilo hecha para ti.</p>
+    <a class="btn" href="#" data-go="analisis">Comenzar análisis</a>
+  </div>
+
+  <div class="hero__model">
+    <img src="public/models/modelo.png" alt="Rostro con puntos de análisis facial">
+  </div>
+
+  <ul class="stats">
+    <li><strong>478</strong><span>puntos faciales detectados</span></li>
+    <li><strong>6</strong><span>formas de rostro</span></li>
+    <li><strong>4</strong><span>estaciones de color</span></li>
+  </ul>
+</div>
+
+      <h2 class="section-title">¿Por qué es importante?</h2>
+      <div class="cards-4">
+        <article class="card"><span class="badge"></span><h3>Rostro</h3><p>Conocer tu forma facial ayuda a elegir escotes y accesorios que equilibran tus rasgos.</p></article>
+        <article class="card"><span class="badge"></span><h3>Colorimetría</h3><p>Los colores correctos iluminan tu piel y ayudan a que luzcas descansada.</p></article>
+        <article class="card"><span class="badge"></span><h3>Maquillaje</h3><p>Labial, rubor y sombras en tonos que armonizan con tu piel natural.</p></article>
+        <article class="card"><span class="badge"></span><h3>Estilo</h3><p>Una guía clara de qué usar y qué evitar, con la explicación de cada recomendación.</p></article>
+      </div>
+    </section>
+
+    <!-- PANTALLA 2: SUBIR FOTO -->
+    <section id="analisis" class="view">
+      <ol class="stepper" aria-label="Progreso">
+        <li class="is-active"><span>1</span>Foto</li>
+        <li><span>2</span>Análisis facial</li>
+        <li><span>3</span>Colorimetría</li>
+        <li><span>4</span>Resultados</li>
+      </ol>
+
+      <h1 class="page-title">Conozcamos tu rostro</h1>
+      <p class="lead">Sube una foto y la analizamos en tu navegador para personalizar tus recomendaciones.</p>
+
+      <div class="analysis-grid">
+        <div class="upload card">
+          <div class="preview" id="preview">
+            <svg viewBox="0 0 200 260" aria-hidden="true">
+              <ellipse cx="100" cy="115" rx="52" ry="70" class="face-outline"/>
+              <path d="M30 260c6-48 36-70 70-70s64 22 70 70" class="face-outline"/>
+            </svg>
+            <span class="corner tl"></span><span class="corner tr"></span>
+            <span class="corner bl"></span><span class="corner br"></span>
+          </div>
+          <p class="upload__hint">JPG, PNG o WEBP · máximo 10 MB</p>
+          <label class="btn" for="photo-input">Subir foto</label>
+          <input id="photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+          <p class="privacy">Tu foto se procesa en tu dispositivo y no se envía a ningún servidor.</p>
+        </div>
+
+        <div class="side">
+          <div class="card">
+            <h2>Lo que analizamos</h2>
+            <ul class="list">
+              <li><span class="badge"></span><div><strong>Forma del rostro</strong><small>Ovalado, redondo, cuadrado y más</small></div></li>
+              <li><span class="badge"></span><div><strong>Proporciones</strong><small>Frente, pómulos y mandíbula</small></div></li>
+              <li><span class="badge"></span><div><strong>Tono de piel</strong><small>Subtono y luminosidad</small></div></li>
+              <li><span class="badge"></span><div><strong>Colorimetría</strong><small>Tu estación de color</small></div></li>
+            </ul>
+          </div>
+          <div class="card tips">
+            <h2>Para mejores resultados</h2>
+            <ul>
+              <li>Mira de frente a la cámara.</li>
+              <li>Usa luz natural, sin sombras fuertes.</li>
+              <li>Deja el rostro despejado: sin gafas, mascarilla ni mechones sobre la cara.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
