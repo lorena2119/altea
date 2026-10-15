@@ -107,7 +107,9 @@ small { color: var(--muted); font-size: 0.78rem; }
   display: grid; place-items: end center;
 }
 .preview svg { width: 70%; }
-.preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.preview canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.toggle { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+.toggle input { accent-color: var(--violet); }
 .corner { position: absolute; width: 22px; height: 22px; border: 2px solid var(--violet); }
 .corner.tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
 .corner.tr { top: 12px; right: 12px; border-left: 0; border-bottom: 0; }
