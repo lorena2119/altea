@@ -1,4 +1,6 @@
 import './styles/main.css';
+import { initUploader } from './ui/uploader.js';
+initUploader();
 
 const views = document.querySelectorAll('.view');
 const navLinks = document.querySelectorAll('[data-nav]');
