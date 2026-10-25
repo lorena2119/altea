@@ -128,6 +128,20 @@ small { color: var(--muted); font-size: 0.78rem; }
 .message--success { background: #EAF6EF; color: #25613F; }
 .message--warning { background: #FFF6E5; color: #7A5410; }
 .message--error { background: #FDECEE; color: #8E2433; }
+.shape-name { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+.shape-reason { font-size: 0.85rem; color: var(--muted); }
+.ratios { width: 100%; margin: 14px 0; border-collapse: collapse; font-size: 0.85rem; }
+.ratios td { padding: 6px 0; border-bottom: 1px solid var(--line); }
+.ratios td:last-child { text-align: right; font-weight: 600; }
+.note { font-size: 0.75rem; color: var(--muted); }
+.card h3 { font-size: 0.85rem; margin: 18px 0 10px; }
+.skin-sample { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 0.8rem; color: var(--muted); }
+.skin-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); flex: none; }
+.swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatches li { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 56px; text-align: center; }
+.swatches span { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.08); }
+.swatches small { font-size: 0.65rem; line-height: 1.2; }
+.note--warn { color: #7A5410; background: #FFF6E5; padding: 8px 10px; border-radius: 10px; margin-top: 12px; }
 
 /* ===== Escritorio ===== */
 @media (min-width: 900px) {

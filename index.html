@@ -71,7 +71,7 @@
           </div>
           <label class="toggle">
             <input type="checkbox" id="show-landmarks" checked disabled>
-                Mostrar puntos faciales
+                Mostrar puntos y medidas
             </label>
           <p class="upload__hint">JPG, PNG o WEBP · máximo 10 MB</p>
           <label class="btn" for="photo-input">Subir foto</label>
@@ -81,6 +81,9 @@
         </div>
 
         <div class="side">
+          <div class="card" id="geometry-panel" hidden></div>
+          <div class="card" id="color-panel" hidden></div>
+          <div class="card" id="reco-panel" hidden></div>
           <div class="card">
             <h2>Lo que analizamos</h2>
             <ul class="list">
