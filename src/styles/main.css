@@ -74,7 +74,7 @@ small { color: var(--muted); font-size: 0.78rem; }
 .hero { display: grid; gap: 24px; padding-top: 16px; }
 .hero__text h1 { font-size: clamp(2.4rem, 7vw, 3.8rem); line-height: 1.02; letter-spacing: -0.03em; font-weight: 700; max-width: 8ch; }
 .hero__model { display: flex; justify-content: center; }
-.hero__model img { width: min(100%, 420px); height: auto; display: block; }
+.hero__model img { width: 100%; height: auto; display: block; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center; }
 .stats strong { display: block; font-size: 2rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
 .stats span { font-size: 0.78rem; color: var(--muted); }
@@ -166,7 +166,7 @@ small { color: var(--muted); font-size: 0.78rem; }
 /* ===== Móvil y tablet ===== */
 @media (max-width: 899px) {
   .hero__text h1 { max-width: none; }
-  .hero__model img { width: min(78%, 340px); }
+  .model-frame { width: min(78%, 340px); }
   .stats {
     margin-top: -12px; padding: 16px 8px;
     background: var(--surface); border: 1px solid var(--line);
@@ -227,3 +227,49 @@ small { color: var(--muted); font-size: 0.78rem; }
 }
 
 .tech summary { cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--violet); margin: 4px 0 8px; }
+
+/* ===== Etapa 9: diseño final ===== */
+
+/* Iconos dentro de los marcadores */
+.badge--icon::after { display: none; }
+.badge svg { position: absolute; inset: 8px; width: 20px; height: 20px; fill: none; stroke: var(--violet); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Foto de la modelo con recuadros propios */
+.model-frame { position: relative; width: min(100%, 420px); }
+.scan { position: absolute; display: flex; align-items: flex-end; padding: 5px 7px; border: 1.5px solid rgba(255, 255, 255, 0.95); color: #fff; font-size: clamp(0.55rem, 1.7vw, 0.68rem); font-weight: 600; white-space: nowrap; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); }
+.scan::before { content: ''; position: absolute; top: 4px; left: 4px; width: 5px; height: 5px; background: #fff; }
+.scan--forehead { left: 41%; top: 22%; width: 17%; height: 11%; }
+.scan--cheek { left: 64%; top: 49%; width: 19%; height: 11%; }
+.scan--jaw { left: 22%; top: 72%; width: 19%; height: 11%; }
+
+/* Botones y tarjetas */
+.btn { transition: background 0.15s, transform 0.15s, box-shadow 0.15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(106, 85, 201, 0.2); }
+.btn:active { transform: none; box-shadow: none; }
+.cards-4 .card { transition: transform 0.2s, box-shadow 0.2s; }
+.cards-4 .card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(106, 85, 201, 0.14); }
+.tab { transition: background 0.15s, color 0.15s; }
+.tab:hover:not(.is-active) { background: var(--lilac-100); }
+
+/* Mensajes con icono de estado */
+.message::before { font-weight: 700; margin-right: 8px; }
+.message--success::before { content: '✓'; }
+.message--warning::before { content: '!'; }
+.message--error::before { content: '✕'; }
+.message--info::before { content: ''; display: inline-block; width: 0.8em; height: 0.8em; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; vertical-align: -1px; animation: spin 0.7s linear infinite; }
+
+/* Línea de escaneo sobre la foto mientras se analiza */
+.preview.is-scanning::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; z-index: 2; background: linear-gradient(90deg, transparent, var(--violet), transparent); box-shadow: 0 0 14px var(--violet); animation: scan 1.4s ease-in-out infinite; }
+.preview.is-scanning canvas { opacity: 0.85; }
+
+/* Animaciones de entrada */
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes scan { 0%, 100% { top: 0; } 50% { top: calc(100% - 3px); } }
+.view.is-active { animation: fade-up 0.35s ease both; }
+.results { animation: fade-up 0.4s ease both; }
+.pane:not([hidden]) { animation: fade-up 0.25s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

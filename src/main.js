@@ -1,6 +1,8 @@
 import './styles/main.css';
 import { initUploader } from './ui/uploader.js';
+import { decorateBadges } from './ui/icons.js';
 initUploader();
+decorateBadges();
 
 const views = document.querySelectorAll('.view');
 const navLinks = document.querySelectorAll('[data-nav]');
