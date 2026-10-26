@@ -142,6 +142,13 @@ small { color: var(--muted); font-size: 0.78rem; }
 .swatches span { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.08); }
 .swatches small { font-size: 0.65rem; line-height: 1.2; }
 .note--warn { color: #7A5410; background: #FFF6E5; padding: 8px 10px; border-radius: 10px; margin-top: 12px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags li { background: var(--lilac-50); color: var(--violet); border-radius: 999px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; }
+.stores { display: grid; gap: 10px; margin-top: 10px; }
+.stores li { display: grid; gap: 4px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-md); }
+.stores strong { font-size: 0.9rem; }
+.links { display: flex; gap: 14px; flex-wrap: wrap; }
+.links a { color: var(--violet); font-size: 0.82rem; font-weight: 600; text-decoration: underline; }
 
 /* ===== Escritorio ===== */
 @media (min-width: 900px) {
@@ -173,3 +180,50 @@ small { color: var(--muted); font-size: 0.78rem; }
   .hero__text .btn { width: 100%; }
   .cards-4 { grid-template-columns: 1fr; }
 }
+
+/* ===== Pasos hechos ===== */
+.stepper .is-done { color: var(--ink); }
+.stepper .is-done span { background: var(--lilac-100); color: var(--violet); }
+
+/* ===== Resultados ===== */
+.analysis-grid { align-items: start; }
+.has-results .side-info { display: none; }
+.results h2 { font-size: 1.15rem; margin-bottom: 14px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; }
+.tab { flex: none; border: 0; cursor: pointer; background: var(--lilac-50); color: var(--muted); font: 600 0.78rem var(--font); padding: 8px 10px; border-radius: 999px; }
+.tab.is-active { background: var(--violet); color: #fff; }
+.pane { display: block; }
+.pane[hidden] { display: none; }
+
+.summary-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); margin-bottom: 12px; }
+.stat-card { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 16px; background: var(--surface); }
+.eyebrow { display: block; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.65rem; font-weight: 600; }
+.big { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 4px 0 6px; }
+.muted { font-size: 0.82rem; color: var(--muted); }
+.mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.mini-stats div { background: var(--lilac-50); border-radius: 12px; padding: 8px 10px; }
+.mini-stats dt { font-size: 0.65rem; color: var(--muted); }
+.mini-stats dd { font-size: 1rem; font-weight: 700; margin: 0; }
+.chips-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.chip { background: var(--lilac-50); color: var(--violet); border-radius: 999px; padding: 4px 10px; font-size: 0.75rem; font-weight: 600; }
+
+.palette-card { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 16px; margin-bottom: 12px; background: var(--surface); }
+.palette-card h3 { margin: 0 0 14px; font-size: 0.9rem; }
+.cards-grid { display: grid; gap: 0; grid-template-columns: 1fr; }
+.dots { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 14px 8px; }
+.dots li { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.dots span { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); }
+.dots small { font-size: 0.72rem; line-height: 1.2; color: var(--ink); }
+
+.neck-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
+.neck { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 10px 8px; text-align: center; font-size: 0.75rem; font-weight: 600; line-height: 1.25; background: var(--surface); }
+.neck svg { width: 72px; height: 58px; display: block; margin: 0 auto 6px; }
+.neck path { fill: var(--lilac-100); stroke: var(--violet); stroke-width: 1.5; stroke-linejoin: round; }
+.neck--avoid { opacity: 0.65; }
+.neck--avoid path { fill: #F3F1F7; stroke: var(--muted); }
+
+@media (min-width: 900px) {
+  .upload { position: sticky; top: 16px; }
+}
+
+.tech summary { cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--violet); margin: 4px 0 8px; }

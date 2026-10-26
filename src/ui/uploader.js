@@ -3,30 +3,26 @@ import { detectFace } from '../analysis/faceLandmarker.js';
 import { analyzeFace, MEASURES } from '../analysis/faceGeometry.js';
 import { sampleSkinColor } from '../analysis/skinColor.js';
 import { classifyColorimetry } from '../analysis/colorimetry.js';
-import { renderGeometryPanel, clearGeometryPanel } from './geometryPanel.js';
-import { renderColorPanel, clearColorPanel } from './colorPanel.js';
+import { buildRecommendations } from '../recommender/recommender.js';
+import { renderResults, clearResults } from './resultsPanel.js';
+import { setStep } from './stepper.js';
 
-let current = null; // { image, url, landmarks, geometry, skin, color }
+let current = null; // { image, url, landmarks, geometry, skin, color, reco }
 
-// Las siguientes etapas leerán la foto y los resultados con estas funciones
-export function getCurrentImage() {
-  return current ? current.image : null;
-}
-export function getCurrentLandmarks() {
-  return current ? current.landmarks : null;
-}
-export function getCurrentGeometry() {
-  return current ? current.geometry : null;
-}
-export function getCurrentColor() {
-  return current ? current.color : null;
-}
+// Estas funciones permiten leer los resultados desde otros módulos
+export const getCurrentImage = () => (current ? current.image : null);
+export const getCurrentLandmarks = () => (current ? current.landmarks : null);
+export const getCurrentGeometry = () => (current ? current.geometry : null);
+export const getCurrentColor = () => (current ? current.color : null);
+export const getCurrentRecommendations = () => (current ? current.reco : null);
 
 export function initUploader() {
   const input = document.getElementById('photo-input');
   const preview = document.getElementById('preview');
   const message = document.getElementById('upload-message');
   const toggle = document.getElementById('show-landmarks');
+  const grid = document.querySelector('.analysis-grid');
+  const resultsPanel = document.getElementById('results-panel');
   let runId = 0; // evita que un análisis viejo pise a uno nuevo
 
   function showMessage(text, type) {
@@ -88,6 +84,12 @@ export function initUploader() {
     preview.classList.add('has-image');
   }
 
+  // Vuelve al inicio del proceso mostrando un mensaje
+  function fail(text) {
+    setStep(1);
+    showMessage(text, 'error');
+  }
+
   toggle.addEventListener('change', renderPreview);
 
   input.addEventListener('change', async () => {
@@ -95,6 +97,8 @@ export function initUploader() {
     if (!file) return;
     const myRun = ++runId;
 
+    // PASO 1 · FOTO
+    setStep(1);
     showMessage('Analizando imagen...', 'info');
     const result = await validateImageFile(file);
     input.value = ''; // permite volver a elegir el mismo archivo
@@ -106,72 +110,73 @@ export function initUploader() {
     }
 
     if (current) URL.revokeObjectURL(current.url);
-    current = { image: result.image, url: result.url, landmarks: null, geometry: null, skin: null, color: null };
+    current = { image: result.image, url: result.url, landmarks: null, geometry: null, skin: null, color: null, reco: null };
     toggle.disabled = true;
-    clearGeometryPanel();
-    clearColorPanel();
+    clearResults();
+    grid.classList.remove('has-results');
     renderPreview();
 
+    // PASO 2 · ANÁLISIS FACIAL
+    setStep(2);
     showMessage('Detectando rostro...', 'info');
     let detection;
     try {
       detection = await detectFace(result.image);
     } catch (err) {
       console.error(err);
-      if (myRun === runId) {
-        showMessage('No pudimos cargar el detector de rostros. Revisa tu conexión e inténtalo de nuevo.', 'error');
-      }
+      if (myRun === runId) fail('No pudimos cargar el detector de rostros. Revisa tu conexión e inténtalo de nuevo.');
       return;
     }
     if (myRun !== runId) return;
 
     if (detection.status === 'no-face') {
-      showMessage('No detectamos un rostro. Usa una foto frontal, con buena iluminación y sin cubrir la cara.', 'error');
+      fail('No detectamos un rostro. Usa una foto frontal, con buena iluminación y sin cubrir la cara.');
       return;
     }
     if (detection.status === 'multiple') {
-      showMessage('Detectamos más de un rostro. Sube una foto en la que aparezca solo una persona.', 'error');
+      fail('Detectamos más de un rostro. Sube una foto en la que aparezca solo una persona.');
       return;
     }
 
     showMessage('Analizando características...', 'info');
     current.landmarks = detection.landmarks;
-    current.geometry = analyzeFace(
-      detection.landmarks,
-      result.image.naturalWidth,
-      result.image.naturalHeight
-    );
-    renderGeometryPanel(current.geometry);
+    current.geometry = analyzeFace(detection.landmarks, result.image.naturalWidth, result.image.naturalHeight);
 
-    // Colorimetría: mide la piel y clasifica la estación
-    const colorNotes = [];
+    // PASO 3 · COLORIMETRÍA
+    setStep(3);
+    showMessage('Midiendo el color de tu piel...', 'info');
+    const notes = [...result.warnings, ...detection.problems, ...current.geometry.pose.problems];
     try {
       const skin = sampleSkinColor(result.image, detection.landmarks);
       current.skin = skin;
       if (skin.ok) {
         current.color = classifyColorimetry(skin.lab);
-        renderColorPanel(skin, current.color);
-        colorNotes.push(...skin.warnings);
+        current.reco = buildRecommendations(current.color, current.geometry);
+        notes.push(...skin.warnings);
       } else {
-        colorNotes.push(skin.error);
+        notes.push(skin.error);
       }
     } catch (err) {
       console.error(err);
-      colorNotes.push('No pudimos medir el color de tu piel.');
+      notes.push('No pudimos medir el color de tu piel.');
     }
     toggle.disabled = false;
     renderPreview();
 
-    const notes = [
-      ...result.warnings,
-      ...detection.problems,
-      ...current.geometry.pose.problems,
-      ...colorNotes,
-    ];
-    if (notes.length) {
+    // PASO 4 · RESULTADOS
+    if (!current.reco) {
+      setStep(2); // sin color no hay recomendaciones
       showMessage(notes.join(' '), 'warning');
-    } else {
-      showMessage('Rostro analizado. Resultado aproximado.', 'success');
+      return;
     }
+    setStep(4);
+    renderResults({ geometry: current.geometry, skin: current.skin, color: current.color, reco: current.reco });
+    grid.classList.add('has-results');
+    if (window.matchMedia('(max-width: 899px)').matches) {
+      resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    if (notes.length) showMessage(notes.join(' '), 'warning');
+    else showMessage('Análisis completado. Resultado aproximado.', 'success');
   });
 }
