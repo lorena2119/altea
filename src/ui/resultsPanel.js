@@ -102,7 +102,7 @@ const PANES = {
       ${card('Escotes y cuellos que te favorecen', `<ul class="neck-grid">${n.best.map((i) => neckCard(i)).join('')}</ul>`)}
       ${n.avoid.length ? card('Mejor evitar', `<ul class="neck-grid">${n.avoid.map((i) => neckCard(i, true)).join('')}</ul>`) : ''}
       <p class="muted">${n.why}</p>
-      <p class="note">Son convenciones de estilo, no reglas: prueba lo que te haga sentir cómoda.</p>`;
+      <p class="note">Son convenciones de estilo, no reglas: prueba lo que te haga sentir cómodo/a.</p>`;
   },
 
   tiendas: ({ reco }) => `

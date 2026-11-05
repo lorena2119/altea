@@ -84,8 +84,12 @@ export function initUploader() {
     preview.classList.add('has-image');
   }
 
+  // Línea de escaneo sobre la foto mientras se analiza
+  const setBusy = (on) => preview.classList.toggle('is-scanning', on);
+
   // Vuelve al inicio del proceso mostrando un mensaje
   function fail(text) {
+    setBusy(false);
     setStep(1);
     showMessage(text, 'error');
   }
@@ -117,6 +121,7 @@ export function initUploader() {
     renderPreview();
 
     // PASO 2 · ANÁLISIS FACIAL
+    setBusy(true);
     setStep(2);
     showMessage('Detectando rostro...', 'info');
     let detection;
@@ -164,6 +169,7 @@ export function initUploader() {
     renderPreview();
 
     // PASO 4 · RESULTADOS
+    setBusy(false);
     if (!current.reco) {
       setStep(2); // sin color no hay recomendaciones
       showMessage(notes.join(' '), 'warning');

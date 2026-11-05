@@ -3,8 +3,7 @@ import { FACE_LIMITS } from '../data/thresholds.js';
 
 // Los archivos wasm se descargan de la CDN, con la misma versión del paquete
 const WASM_URL = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/wasm';
-const MODEL_URL = '/models/face_landmarker.task';
-
+const MODEL_URL = `${import.meta.env.BASE_URL}models/face_landmarker.task`;
 let landmarkerPromise = null;
 
 // El modelo se carga una sola vez y se reutiliza
